@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const protect = (req, res, next) => {
     // 1. Check for token in cookies

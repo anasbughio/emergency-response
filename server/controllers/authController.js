@@ -14,7 +14,7 @@ const generateToken = (id, role) => {
 // New function to set the cookie and send the response
 const sendTokenResponse = (user, statusCode, res) => {
     const token = generateToken(user._id, user.role);
-
+console.log(`✅ Auth Token Generated for User ${user._id}: anas${token}anas`);
     // Configuration for the HTTP-only cookie
     const options = {
         // 12 hours expiry (Matches the hardcoded time in your existing options)
