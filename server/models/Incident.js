@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 const IncidentSchema = new mongoose.Schema({
     // Core report details
     title: {
@@ -17,14 +18,14 @@ const IncidentSchema = new mongoose.Schema({
         enum: ['Reported', 'Assigned', 'InProgress', 'Resolved', 'Rejected'],
         default: 'Reported'
     },
-    // Location data
+    // Location data (GeoJSON)
     location: {
         type: {
             type: String,
             enum: ['Point'], // GeoJSON type
             default: 'Point'
         },
-        coordinates: { // [longitude, latitude]
+        coordinates: { // [longitude, latitude] - REQUIRED for 2dsphere index
             type: [Number],
             required: true
         },
@@ -37,8 +38,10 @@ const IncidentSchema = new mongoose.Schema({
         required: true // Must link to a logged-in user (Citizen)
     },
     assignedTo: {
+        // FIX: The original model was correct for linking to a single user
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' // Links to a Responder, null if not yet assigned
+        ref: 'User',
+        default: null // Explicitly set default to null for unassigned
     },
     severity: {
         type: String,
